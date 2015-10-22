@@ -5,9 +5,10 @@ from django.utils import timezone
 
 class Article(models.Model):
     TYPE = (('T', 'Title'), ('C', 'Content'), ('Y', 'Youtube'), ('I', 'Image'))
-    url = models.CharField(max_length=50)
-    article_type = models.CharField(max_length=1, choices=TYPE)
-    piece_position = models.IntegerField()
+    url = models.CharField(max_length=50, null=False)
+    article_type = models.CharField(max_length=1, choices=TYPE, null=False)
+    text = models.TextField(null=False, default="")
+    piece_position = models.IntegerField(null=False)
     youtube_width = models.IntegerField(default=560)
     youtube_height = models.IntegerField(default=315)
     image_width = models.IntegerField(default=560)
@@ -25,4 +26,3 @@ class Article(models.Model):
         if self.visible > 0:
             return True
         return False
-
