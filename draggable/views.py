@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_list_or_404
 from .models import Article
 
 
@@ -9,8 +9,9 @@ def article_list(request):
 
 
 def article_detail(request, pk):
-    article = get_object_or_404(Article, pk=pk)
-    return render(request, 'draggable/article_detail.html', {'article': article})
+    ordered_article = Article.objects.all()
+    articles = get_list_or_404(ordered_article, pk=pk)
+    return render(request, 'draggable/article_detail.html', {'articles': articles})
 
 
 def create_article(request):

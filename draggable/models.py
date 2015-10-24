@@ -4,25 +4,23 @@ from django.utils import timezone
 
 
 class Article(models.Model):
+    title = models.CharField(max_length=50, null=False)
+    created_date = models.DateTimeField(default=timezone.now)
+    visible = models.IntegerField(default=1)
+
+    def __str__(self):
+        return self.title
+
+
+class Section(models.Model):
     TYPE = (('T', 'Title'), ('C', 'Content'), ('Y', 'Youtube'), ('I', 'Image'))
-    url = models.CharField(max_length=50, null=False)
-    article_type = models.CharField(max_length=1, choices=TYPE, null=False)
+    article_id = models.ForeignKey(Article)
+    section_type = models.CharField(max_length=1, choices=TYPE, null=False)
     text = models.TextField(null=False, default="")
-    piece_position = models.IntegerField(null=False)
+    section_position = models.IntegerField(null=False)
     youtube_width = models.IntegerField(default=560)
     youtube_height = models.IntegerField(default=315)
     image_width = models.IntegerField(default=560)
     image_height = models.IntegerField(default=560)
     visible = models.IntegerField(default=1)
-    created_date = models.DateTimeField(
-            default=timezone.now)
     title_size = models.IntegerField(default=1)
-
-    def visible(self, n):
-        self.visible = n
-        self.save()
-
-    def is_visible(self):
-        if self.visible > 0:
-            return True
-        return False

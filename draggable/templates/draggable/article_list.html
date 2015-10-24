@@ -1,4 +1,7 @@
-Hello
+{% extends "draggable/base.html" %}
+
+{% block content %}
 {% for article in articles %}
-    <div>{{ article.text }}</div>
+    <a href="article/{{article.id}}">{{ article}}</a>
 {% endfor %}
+{% endblock content %}
