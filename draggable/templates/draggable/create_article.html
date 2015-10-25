@@ -1,1 +1,131 @@
 {% extends "draggable/base.html" %}
+
+
+
+{% block content %}
+  <br>
+
+  <ul id="sortable">
+  </ul>
+
+  <br>
+  <button class="btn btn-info" onclick="addtitle()">Add Title</button>
+  <button class="btn btn-info" onclick="addcontent()">Add Content</button>
+  <button class="btn btn-info" onclick="addyoutube()">Add Youtube</button>
+  <button class="btn btn-info" onclick="addimage()">Add Image</button>
+
+
+
+{% endblock content %}
+
+{% block customjs %}
+  <script>
+    var $ = jQuery;
+    $(function() {
+      $( "#sortable" ).sortable();
+      $( "#sortable" ).disableSelection();
+    });
+
+
+    function jsondata()
+    {
+        li_elements = document.getElementsByTagName('li');
+        if (li_elements.length == 0) return {};
+        obj = {"sections": []}
+        for (x = 0; x < li_elements.length; x++){
+            sx = (x+1).toString()
+            switch (li_elements[x].className.split(' ')[2]) {
+                case 'T':
+                    t_obj = {};
+                    t_obj['type'] = 'T';
+                    t_obj['index'] = x + 1;
+                    t_obj['text'] = document.getElementById(sx).children[0].children[0].value;
+                    t_obj['text_size'] = document.getElementById(sx).children[0].children[1].value;
+                    obj['sections'].push(t_obj);
+                    break;
+                case 'C':
+                    t_obj = {};
+                    t_obj['type'] = 'C';
+                    t_obj['index'] = x + 1;
+                    t_obj['text'] = document.getElementById(sx).children[0].children[0].value;
+                    obj['sections'].push(t_obj);
+                    break;
+                case 'Y':
+                    t_obj = {};
+                    t_obj['type'] = 'Y';
+                    t_obj['index'] = x + 1;
+                    t_obj['url']  = document.getElementById(sx).children[0].children[0].value;
+                    t_obj['width']  = document.getElementById(sx).children[0].children[1].value;
+                    t_obj['height']  = document.getElementById(sx).children[0].children[2].value;
+                    obj['sections'].push(t_obj);
+                    break;
+                case 'I':
+                    t_obj = {};
+                    t_obj['type'] = 'I';
+                    t_obj['index'] = x + 1;
+                    t_obj['url']  = document.getElementById(sx).children[0].children[0].value;
+                    t_obj['width']  = document.getElementById(sx).children[0].children[1].value;
+                    t_obj['height']  = document.getElementById(sx).children[0].children[2].value;
+                    obj['sections'].push(t_obj);
+                    break;
+            }
+        }
+        return obj;
+    }
+
+    function sortids()
+    {
+        countid = 1
+        var lis = document.getElementsByTagName('li');
+        for (x = 0; x < lis.length; x++){
+            lis[x].id = countid.toString();
+            countid += 1;
+        }
+    }
+    //clean up
+    function addtitle()
+    {
+        extrahtml = '<li class="ui-state-default ui-sortable-handle T" id="1" onmouseover="sortids()"><div>';
+        extrahtml += 'Title: <input type="text" name="title">';
+        extrahtml += ' Title Size: <input type="text" name="titlesize" value="1">';
+        extrahtml += '</div><br></li>';
+        $('#sortable').append(extrahtml);
+        sortids();
+    }
+
+    function addcontent()
+    {
+        extrahtml = '<li class="ui-state-default ui-sortable-handle C" id="1" onmouseover="sortids()"><div>';
+        extrahtml += 'Content: <textarea class="form-control" rows="5" ></textarea>';
+        extrahtml += '</div><br></li>';
+        $('#sortable').append(extrahtml);
+        sortids();
+    }
+
+    function addyoutube()
+    {
+        extrahtml = '<li class="ui-state-default ui-sortable-handle Y" id="1" onmouseover="sortids()"><div>';
+        extrahtml += 'Youtube URL: <input type="text" name="url">';
+        extrahtml += ' Width: <input type="text" name="width" value="560">';
+        extrahtml += ' Height: <input type="text" name="height" value="315">';
+        extrahtml += '</div><br></li>';
+        $('#sortable').append(extrahtml);
+        sortids();
+    }
+
+    function addimage()
+    {
+        extrahtml = '<li class="ui-state-default ui-sortable-handle I" id="1" onmouseover="sortids()"><div>';
+        extrahtml += 'Image URL: <input type="text" name="url">';
+        extrahtml += ' Width: <input type="text" name="width" value="560">';
+        extrahtml += ' Height: <input type="text" name="height" value="315">';
+        extrahtml += '</div><br></li>';
+        $('#sortable').append(extrahtml);
+        sortids();
+    }
+
+  </script>
+{% endblock customjs %}
+
+
+

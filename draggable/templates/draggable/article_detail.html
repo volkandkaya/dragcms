@@ -2,7 +2,18 @@
 
 {% block content %}
 <div class="row">
-
-
+{% for section in sections %}
+    {% if section.section_type == "T" %}
+        {% include "draggable/section_title.html" %}
+    {% elif section.section_type == "Y" %}
+        {% include "draggable/section_youtube.html" %}
+    {% elif section.section_type == "I" %}
+        {% include "draggable/section_image.html" %}
+    {% else %}
+        <div>{{ section.text }}</div>
+    {% endif %}
+{% endfor %}
 </div>
 {% endblock content %}
+
+
