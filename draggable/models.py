@@ -24,3 +24,25 @@ class Section(models.Model):
     image_height = models.IntegerField(default=560)
     visible = models.IntegerField(default=1)
     title_size = models.IntegerField(default=1)
+
+    def create_title(dic, pk):
+        a = Article.objects.all().filter(pk=pk)[0]
+        b = Section(article_id=a, section_type=dic['type'], text=dic['text'],section_position=dic['index'], title_size=1)
+        b.save()
+
+    def create_content(dic, pk):
+        a = Article.objects.all().filter(pk=pk)[0]
+        b = Section(article_id=a, section_type=dic['type'], text=dic['text'],section_position=dic['index'])
+        b.save()
+
+    def create_youtube(dic, pk):
+        a = Article.objects.all().filter(pk=pk)[0]
+        b = Section(article_id=a, section_type=dic['type'], text=dic['url'],section_position=dic['index'], youtube_height=dic['height'],youtube_width=dic['width'])
+        b.save()
+
+    def create_image(dic, pk):
+        a = Article.objects.all().filter(pk=pk)[0]
+        b = Section(article_id=a, section_type=dic['type'], text=dic['url'],section_position=dic['index'], image_height=dic['height'], image_width=dic['width'])
+        b.save()
+
+
