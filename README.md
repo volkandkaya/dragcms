@@ -15,10 +15,12 @@
 * cd dragcms
 * "pip install -r requirements.txt" to download Django and PostgreSQL
 * In settings.py change the database to
-* 'default': {
+```python
+    default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'mydatabase',
     }
+```
 * for sqlite (much easier to set up for development)
 * Then run "python manage.py makemigrations"
 * Then run "python manage.py migrate"
