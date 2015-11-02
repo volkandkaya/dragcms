@@ -16,7 +16,7 @@
 * "pip install -r requirements.txt" to download Django and PostgreSQL
 * In settings.py change the database to
 ```python
-    default': {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'mydatabase',
     }
