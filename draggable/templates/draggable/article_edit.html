@@ -8,19 +8,23 @@
         <li class="ui-state-default ui-sortable-handle T"><div>
         Title: <input type="text" name="title" value="{{ section.text }}">
         Title Size: <input type="text" name="titlesize" value="{{ section.title_size }}">
+        <button class="btn btn-danger" onclick="deleteelement()">X</button>
     {% elif section.section_type == "Y" %}
         <li class="ui-state-default ui-sortable-handle Y"><div>
         Youtube URL: <input type="text" name="url" value="{{ section.text }}">
         Width: <input type="text" name="width" value="{{ section.youtube_width }}">
         Height: <input type="text" name="height" value="{{ section.youtube_height }}">
+        <button class="btn btn-danger">X</button>
     {% elif section.section_type == "I" %}
         <li class="ui-state-default ui-sortable-handle I"><div>
         Image URL: <input type="text" name="url" value="{{ section.text }}">
         Width: <input type="text" name="width" value="{{ section.image_width }}">
         Height: <input type="text" name="height" value="{{ section.image_height }}">
+        <button class="btn btn-danger">X</button>
     {% else %}
         <li class="ui-state-default ui-sortable-handle C"><div>
         Content: <textarea class="form-control" rows="5">{{ section.text }}</textarea>
+        <button class="btn btn-danger">X</button>
     {% endif %}
     </div><br></li>
 {% endfor %}
@@ -129,6 +133,22 @@
             countid += 1;
         }
     }
+
+    $(".btn-danger").click(function(event) {
+            event.preventDefault();
+            console.log($(this).parentNode);
+            //$(this).parentNode.parentNode.remove();
+            //$(this).parents('.li').remove();
+        });
+
+    function deleteelement()
+    {
+
+        var liid = 0;
+        var elem = document.getElementsByTagName('li')[liid];
+        //elem.parentElement.removeChild(elem);
+    }
+
     //clean up
     function addtitle()
     {
