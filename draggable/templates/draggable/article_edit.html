@@ -12,14 +12,14 @@
     {% elif section.section_type == "Y" %}
         <li class="ui-state-default ui-sortable-handle Y"><div>
         Youtube URL: <input type="text" name="url" value="{{ section.text }}">
-        Width: <input type="text" name="width" value="{{ section.youtube_width }}">
-        Height: <input type="text" name="height" value="{{ section.youtube_height }}">
+        Width: <input type="text" name="width" value="{{ section.width }}">
+        Height: <input type="text" name="height" value="{{ section.height }}">
         <button class="btn btn-danger" onclick="deleteelement(this.id)">X</button>
     {% elif section.section_type == "I" %}
         <li class="ui-state-default ui-sortable-handle I"><div>
         Image URL: <input type="text" name="url" value="{{ section.text }}">
-        Width: <input type="text" name="width" value="{{ section.image_width }}">
-        Height: <input type="text" name="height" value="{{ section.image_height }}">
+        Width: <input type="text" name="width" value="{{ section.width }}">
+        Height: <input type="text" name="height" value="{{ section.height }}">
         <button class="btn btn-danger" onclick="deleteelement(this.id)">X</button>
     {% else %}
         <li class="ui-state-default ui-sortable-handle C"><div>

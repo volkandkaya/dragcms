@@ -19,10 +19,8 @@ class Section(models.Model):
     section_type = models.CharField(max_length=1, choices=TYPE, null=False)
     text = models.TextField(null=False, default="")
     section_position = models.IntegerField(null=False)
-    youtube_width = models.IntegerField(default=560)
-    youtube_height = models.IntegerField(default=315)
-    image_width = models.IntegerField(default=560)
-    image_height = models.IntegerField(default=560)
+    width = models.IntegerField(default=560)
+    height = models.IntegerField(default=315)
     visible = models.IntegerField(default=1)
     title_size = models.IntegerField(default=1)
 
@@ -38,12 +36,12 @@ class Section(models.Model):
 
     def create_youtube(dic, pk):
         a = Article.objects.all().filter(pk=pk)[0]
-        b = Section(article_id=a, section_type=dic['type'], text=dic['url'],section_position=dic['index'], youtube_height=dic['height'],youtube_width=dic['width'])
+        b = Section(article_id=a, section_type=dic['type'], text=dic['url'],section_position=dic['index'], height=dic['height'], width=dic['width'])
         b.save()
 
     def create_image(dic, pk):
         a = Article.objects.all().filter(pk=pk)[0]
-        b = Section(article_id=a, section_type=dic['type'], text=dic['url'],section_position=dic['index'], image_height=dic['height'], image_width=dic['width'])
+        b = Section(article_id=a, section_type=dic['type'], text=dic['url'],section_position=dic['index'], height=dic['height'], width=dic['width'])
         b.save()
 
 
