@@ -6,4 +6,6 @@ urlpatterns = [
     url(r'^article/(?P<pk>[0-9]+)/$', views.article_detail, name='article_detail'),
     url(r'^article/newarticle$', views.article_new, name='new_article'),
     url(r'^article/(?P<pk>[0-9]+)/edit$', views.article_edit, name='article_edit'),
+    url(r'^article/(?P<pk>[0-9]+)/remove/$', views.article_remove, name='article_remove'),
+    url(r'^article/admin/$', views.article_admin, name='article_admin'),
 ]

@@ -8,23 +8,23 @@
         <li class="ui-state-default ui-sortable-handle T"><div>
         Title: <input type="text" name="title" value="{{ section.text }}">
         Title Size: <input type="text" name="titlesize" value="{{ section.title_size }}">
-        <button class="btn btn-danger" onclick="deleteelement()">X</button>
+        <button class="btn btn-danger" onclick="deleteelement(this.id)"">X</button>
     {% elif section.section_type == "Y" %}
         <li class="ui-state-default ui-sortable-handle Y"><div>
         Youtube URL: <input type="text" name="url" value="{{ section.text }}">
         Width: <input type="text" name="width" value="{{ section.youtube_width }}">
         Height: <input type="text" name="height" value="{{ section.youtube_height }}">
-        <button class="btn btn-danger">X</button>
+        <button class="btn btn-danger" onclick="deleteelement(this.id)">X</button>
     {% elif section.section_type == "I" %}
         <li class="ui-state-default ui-sortable-handle I"><div>
         Image URL: <input type="text" name="url" value="{{ section.text }}">
         Width: <input type="text" name="width" value="{{ section.image_width }}">
         Height: <input type="text" name="height" value="{{ section.image_height }}">
-        <button class="btn btn-danger">X</button>
+        <button class="btn btn-danger" onclick="deleteelement(this.id)">X</button>
     {% else %}
         <li class="ui-state-default ui-sortable-handle C"><div>
         Content: <textarea class="form-control" rows="5">{{ section.text }}</textarea>
-        <button class="btn btn-danger">X</button>
+        <button class="btn btn-danger" onclick="deleteelement(this.id)">X</button>
     {% endif %}
     </div><br></li>
 {% endfor %}
@@ -40,9 +40,9 @@
 
 
   <button class="btn btn-success" type="submit" onclick="postjson()">Save Article</button>
-  <button class="btn btn-default">Preview</button>
-  <button class="btn btn-info"><a href="/article/{{pk }}">Go to Article</a></button>
-
+  <button class="btn btn-info">Preview</button>
+  <button class="btn btn-default"><a href="/article/{{ pk }}">Go to Article</a></button>
+  <a class="btn btn-danger" href="/article/{{ pk }}/remove"><span class="glyphicon glyphicon-remove"></span></a>
 {% endblock content %}
 
 
@@ -134,20 +134,25 @@
         }
     }
 
-    $(".btn-danger").click(function(event) {
-            event.preventDefault();
-            console.log($(this).parentNode);
-            //$(this).parentNode.parentNode.remove();
-            //$(this).parents('.li').remove();
-        });
-
-    function deleteelement()
+    function buttonsortids()
     {
-
-        var liid = 0;
-        var elem = document.getElementsByTagName('li')[liid];
-        //elem.parentElement.removeChild(elem);
+        countid = 1
+        var lis = document.getElementsByTagName('button');
+        for (x = 0; x < lis.length; x++){
+            lis[x].id = countid.toString();
+            countid += 1;
+        }
     }
+
+    buttonsortids()
+
+    function deleteelement(id)
+    {
+            var elem = document.getElementsByTagName('li')[id - 1];
+            elem.parentElement.removeChild(elem);
+            buttonsortids();
+    }
+
 
     //clean up
     function addtitle()
@@ -155,16 +160,20 @@
         extrahtml = '<li class="ui-state-default ui-sortable-handle T" id="1"><div>';
         extrahtml += 'Title: <input type="text" name="title">';
         extrahtml += ' Title Size: <input type="text" name="titlesize" value="1">';
+        extrahtml += '<button class="btn btn-danger" onclick="deleteelement(this.id)">X</button>';
         extrahtml += '</div><br></li>';
         $('#sortable').append(extrahtml);
+        buttonsortids();
     }
 
     function addcontent()
     {
         extrahtml = '<li class="ui-state-default ui-sortable-handle C" id="1"><div>';
         extrahtml += 'Content: <textarea class="form-control" rows="5" ></textarea>';
+        extrahtml += '<button class="btn btn-danger" onclick="deleteelement(this.id)">X</button>';
         extrahtml += '</div><br></li>';
         $('#sortable').append(extrahtml);
+        buttonsortids();
     }
 
     function addyoutube()
@@ -173,8 +182,10 @@
         extrahtml += 'Youtube URL: <input type="text" name="url">';
         extrahtml += ' Width: <input type="text" name="width" value="560">';
         extrahtml += ' Height: <input type="text" name="height" value="315">';
+        extrahtml += '<button class="btn btn-danger" onclick="deleteelement(this.id)">X</button>';
         extrahtml += '</div><br></li>';
         $('#sortable').append(extrahtml);
+        buttonsortids();
     }
 
     function addimage()
@@ -183,8 +194,10 @@
         extrahtml += 'Image URL: <input type="text" name="url">';
         extrahtml += ' Width: <input type="text" name="width" value="560">';
         extrahtml += ' Height: <input type="text" name="height" value="315">';
+        extrahtml += '<button class="btn btn-danger" onclick="deleteelement(this.id)">X</button>';
         extrahtml += '</div><br></li>';
         $('#sortable').append(extrahtml);
+        buttonsortids();
     }
 
   </script>

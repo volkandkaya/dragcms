@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_list_or_404
+from django.shortcuts import render, get_list_or_404, get_object_or_404
 from .models import Article, Section
 from .forms import ArticleForm
 from django.utils import timezone
@@ -23,7 +23,10 @@ def article_list(request):
 
 def article_detail(request, pk):
     ordered_section = Section.objects.all().order_by('section_position')
-    sections = get_list_or_404(ordered_section, article_id=pk)
+    try:
+        sections = get_list_or_404(ordered_section, article_id=pk)
+    except:
+        return redirect('draggable.views.article_list')
     return render(request, 'draggable/article_detail.html', {'sections': sections})
 
 
@@ -67,3 +70,27 @@ def article_new(request):
     else:
         form = ArticleForm()
     return render(request, 'draggable/new_article.html', {'form': form})
+
+
+def article_remove(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+    article.delete()
+    return redirect('draggable.views.article_list')
+
+
+def article_admin(request):
+    articles = Article.objects.all()
+    non_empty_articles = []
+    empty_articles = []
+    ordered_section = Section.objects.all().order_by('section_position')
+    for article in articles:
+        try:
+            lst = get_list_or_404(ordered_section, article_id=article.pk)
+        except:
+            lst = []
+        if len(lst) > 0:
+            non_empty_articles.append(article)
+        else:
+            empty_articles.append(article)
+    context = {'articles': non_empty_articles, 'empty_articles': empty_articles}
+    return render(request, 'draggable/article_admin.html', context)
