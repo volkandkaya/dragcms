@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.http import JsonResponse
 from .models import Article, Section
 from .forms import ArticleForm
 from django.utils import timezone
@@ -50,6 +51,7 @@ def article_edit(request, pk):
                 Section.create_image(bod, pk)
             else:
                 Section.create_content(bod, pk)
+        return JsonResponse({'status': 200})
     else:
         try:
             ordered_section = Section.objects.all().order_by('section_position')
